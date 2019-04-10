@@ -1,4 +1,6 @@
 (ns addressbookje.db)
 
 (def default-db
-  {:name "re-frame"})
+  {:name "re-frame"
+   :contacts nil
+   :loading false})

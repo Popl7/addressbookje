@@ -2,20 +2,34 @@
   (:require
    [re-frame.core :as re-frame]
    [addressbookje.subs :as subs]
+   [addressbookje.events :as events]
    ))
 
 
 ;; home
 
 (defn home-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 (str "Hello from " @name ". This is the Home Page.")]
-
-     [:div
-      [:a {:href "#/about"}
-       "go to About Page"]]
-     ]))
+  (let [name (re-frame/subscribe [::subs/name])
+        contacts (re-frame/subscribe [::subs/contacts])
+        loading (re-frame/subscribe [::subs/loading])]
+    (fn []
+      [:div
+       [:h2 "contacts"]
+       [:button.btn.btn-primary {:on-click #(re-frame/dispatch [::events/load-contacts])} "Load contacts"]
+       (if @loading
+         [:div "Loading..."]
+         [:table.table
+          [:thead
+           [:tr
+            [:th "Name"]
+            [:th "Email"]]]
+          [:tbody
+           (for [contact @contacts]
+             ^{:key contact}
+             [:tr
+              [:td (:name contact)]
+              [:td (:email contact)]])]])]
+       )))
 
 
 ;; about

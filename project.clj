@@ -6,6 +6,7 @@
                  [ring/ring-json "0.4.0"]
                  [secretary "1.2.3"]
                  [compojure "1.5.0"]
+                 [day8.re-frame/http-fx "0.1.6"]
                  [yogthos/config "0.8"]
                  [ring "1.4.0"]]
 
